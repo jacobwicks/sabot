@@ -1,80 +1,13 @@
 import { Page } from 'puppeteer';
-import { Post } from './types';
+import { getNewPostsFromThread } from './modules/scanPosts';
 import { loginWithCookies } from './modules/login';
-import { threadLastRead } from './modules/urls';
+import { trumpThreadId } from './modules/urls';
+import handlePosts from './modules/handlePosts';
 
 const puppeteer = require('puppeteer');
 
-//scans the posts on the page
-const scanPosts = async ({
-    page,
-    threadId,
-}: {
-    page: Page;
-    threadId: string;
-}) => {
-    //generate the last read link
-    const lastReadPostUrl = threadLastRead(threadId);
-
-    //navigate to the lastReadPost url
-    await page.goto(lastReadPostUrl, {
-        waitUntil: 'networkidle0',
-    });
-
-    //wait for it to resolve
-    //then, read the address
-    //the forums use anchor links to link to individual posts
-    //the url will resolve to something with the post number on the page
-    //https://forums.somethingawful.com/showthread.php?noseen=0&threadid=3921885&perpage=40&pagenumber=109#pti34
-    console.log(page.url());
-
-    //evaluate the page, pass in the last read post
-    //there are only 40 posts per page, so we might ned to scan multiple pages
-    const posts: Post[] = await page.evaluate(async () =>
-        [...document.getElementsByClassName('post')].map((post) => {
-            //get the author
-            //getElementsByClassName returns Elements, not HTMLElement
-            //cast to Any then Cast to array of HTMLElement
-            const author = (<HTMLElement[]>(
-                (<any>post.getElementsByClassName('author'))
-            ))[0].innerText;
-
-            //get all the quotes, if any
-            const quotes = [...post.querySelectorAll('blockquote')];
-
-            //get the first image quoted
-
-            const getFirstImage = (quotes: HTMLQuoteElement[]) => {
-                const quoteWithImage = quotes.find((quote) =>
-                    quote.querySelector('img')
-                );
-                return (
-                    //@ts-ignore
-                    quoteWithImage && quoteWithImage.querySelector('img').src
-                );
-            };
-
-            const image = getFirstImage(quotes);
-
-            //the post body
-            const body = (<HTMLElement[]>(
-                (<any>post.getElementsByClassName('postbody'))
-            ))[0].innerText.trim();
-
-            //the postId
-            const id = post.id.slice(4, post.id.length);
-
-            return {
-                author,
-                body,
-                id,
-                image,
-            };
-        })
-    );
-
-    console.log(`there are ${posts.length} posts on the page`);
-};
+const getTrumpThreadPosts = async (page: Page) =>
+    getNewPostsFromThread({ page, threadId: trumpThreadId });
 
 (async () => {
     //create the puppeteer browser
@@ -89,7 +22,13 @@ const scanPosts = async ({
     let loggedIn = await loginWithCookies(page);
 
     if (loggedIn) {
-        console.log(`Logged in! Better do something useful!`);
+        console.log(`Logged in! scanning trump thread`);
+        const posts = await getTrumpThreadPosts(page);
+        console.log(`there are ${posts.length} new posts in the trump thread`);
+        await handlePosts({
+            page,
+            posts,
+        });
     } else {
         console.error(`login failed`);
     }

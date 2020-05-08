@@ -1,6 +1,9 @@
 import { Page } from 'puppeteer';
 import { Post } from '../types';
-const postTrump = ({ page, postId }: { page: Page; postId: string }) => {};
+import { postTrumpTweet } from './actions/postTweet';
+
+const postTrump = ({ page, postId }: { page: Page; postId: string }) =>
+    console.log('placeholder for misspelling turmp');
 
 const imageRedder = ({
     image,
@@ -10,7 +13,7 @@ const imageRedder = ({
     image: string;
     page: Page;
     postId: string;
-}) => {};
+}) => console.log('placeholder for reddening image');
 
 const imageWider = ({
     image,
@@ -20,9 +23,10 @@ const imageWider = ({
     image: string;
     page: Page;
     postId: string;
-}) => {};
+}) => console.log('placeholder for widening image');
 
-const postCat = ({ page, postId }: { page: Page; postId: string }) => {};
+const postCat = ({ page, postId }: { page: Page; postId: string }) =>
+    console.log('placeholder for posting a cat');
 
 //takes an array of posts, handles them
 const handlePosts = ({ page, posts }: { page: Page; posts: Post[] }) => {
@@ -30,8 +34,13 @@ const handlePosts = ({ page, posts }: { page: Page; posts: Post[] }) => {
         //get the properties of the post
         const { author, body, id: postId, image } = post;
 
-        console.log(`${index}: id ${postId}, written by ${author}`, image);
-
+        if (author.toLowerCase() === 'sous videodrome') {
+            console.log(
+                `${index}: id ${postId}, written by ${author}`,
+                image,
+                body
+            );
+        }
         //if a user posts valid instructions as the body of their post
         //then the corresponding action will be taken
         const handleBody: { [key: string]: () => void } = {
@@ -45,11 +54,17 @@ const handlePosts = ({ page, posts }: { page: Page; posts: Post[] }) => {
             //reddens the first image in the post
             redder: () => !!image && imageRedder({ image, page, postId }),
 
+            //posts the latest tweet by trump
+            "what's trumping": () => postTrumpTweet(page),
+            "what's trumpin": () => postTrumpTweet(page),
+            'whats trumping': () => postTrumpTweet(page),
+            'whats trumpin': () => postTrumpTweet(page),
+
             //widens the first image in the post
             wider: () => !!image && imageWider({ image, page, postId }),
 
             //no instruction received
-            default: () => console.log('no instruction'),
+            default: () => undefined,
         };
 
         //invoke handleBody with the body of the post
