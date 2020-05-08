@@ -1,0 +1,29 @@
+{
+  "name": "sabot",
+  "version": "1.0.0",
+  "description": "a bot for posting on forums.somethingawful.com",
+  "main": "saBot.ts",
+  "dependencies": {
+    "@types/puppeteer": "^2.0.1",
+    "cheerio": "^1.0.0-rc.3",
+    "puppeteer": "^3.0.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5",
+    "tslib": "^1.11.2",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobwicks/sabot.git"
+  },
+  "author": "Jacob Wicks",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacobwicks/sabot/issues"
+  },
+  "homepage": "https://github.com/jacobwicks/sabot#readme"
+}
