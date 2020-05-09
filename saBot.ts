@@ -6,9 +6,19 @@ import handlePosts from './modules/handlePosts';
 
 const puppeteer = require('puppeteer');
 
-const getTrumpThreadPosts = async (page: Page) =>
-    getNewPostsFromThread({ page, threadId: trumpThreadId });
+const getTrumpThreadPosts = async (page: Page) => {
+    const limit = {
+        startPage: 261,
+        startPost: 8,
+        stopPage: 262,
+        stopPost: 1,
+    };
+    return getNewPostsFromThread({ page, threadId: trumpThreadId, limit });
+};
 
+//what the bot is doing
+
+//startup functions
 (async () => {
     //create the puppeteer browser
     const browser = await puppeteer.launch();

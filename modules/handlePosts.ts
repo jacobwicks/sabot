@@ -1,8 +1,9 @@
 import { Page } from 'puppeteer';
 import { Post } from '../types';
+import postCat from './actions/postCat';
 import { postTrumpTweet } from './actions/postTweet';
 
-const postTrump = ({ page, postId }: { page: Page; postId: string }) =>
+const postTrump = ({ page, postId }: { page: Page; postId: number }) =>
     console.log('placeholder for misspelling turmp');
 
 const imageRedder = ({
@@ -12,7 +13,7 @@ const imageRedder = ({
 }: {
     image: string;
     page: Page;
-    postId: string;
+    postId: number;
 }) => console.log('placeholder for reddening image');
 
 const imageWider = ({
@@ -22,11 +23,11 @@ const imageWider = ({
 }: {
     image: string;
     page: Page;
-    postId: string;
+    postId: number;
 }) => console.log('placeholder for widening image');
 
-const postCat = ({ page, postId }: { page: Page; postId: string }) =>
-    console.log('placeholder for posting a cat');
+// const postCat = ({ page, postId }: { page: Page; postId: string }) =>
+//     console.log('placeholder for posting a cat');
 
 //takes an array of posts, handles them
 const handlePosts = ({ page, posts }: { page: Page; posts: Post[] }) => {

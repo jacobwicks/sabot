@@ -1,3 +1,5 @@
+import { Page } from 'puppeteer';
+
 const ajax_get = (url: string, callback: (args: any) => void) => {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = () => {
@@ -17,15 +19,14 @@ const ajax_get = (url: string, callback: (args: any) => void) => {
     xmlhttp.send();
 };
 
-export const postCat = () => {
-    const thisCat = ajax_get(
-        'https://api.thecatapi.com/v1/images/search?size=full',
-        function (data) {
-            document.getElementById('id').innerHTML = data[0]['id'];
-            document.getElementById('url').innerHTML = data[0]['url'];
+export const postCat = ({ page, postId }: { page: Page; postId: number }) =>
+    ajax_get('https://api.thecatapi.com/v1/images/search?size=full', (data) => {
+        console.log(data);
+        // document.getElementById('id').innerHTML = data[0]['id'];
+        // document.getElementById('url').innerHTML = data[0]['url'];
 
-            var html = '<img src="' + data[0]['url'] + '">';
-            document.getElementById('image').innerHTML = html;
-        }
-    );
-};
+        // var html = '<img src="' + data[0]['url'] + '">';
+        // document.getElementById('image').innerHTML = html;
+    });
+
+export default postCat;

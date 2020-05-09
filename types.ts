@@ -8,7 +8,7 @@ export interface Post {
     body: string;
 
     //the unique postId number
-    id: string;
+    id: number;
 
     //the img.src property
     image?: string;
