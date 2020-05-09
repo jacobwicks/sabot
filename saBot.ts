@@ -38,12 +38,13 @@ const getTrumpThreadPosts = async (page: Page) => {
         await handlePosts({
             page,
             posts,
+            threadId: trumpThreadId,
         });
     } else {
         console.error(`login failed`);
     }
 
-    await browser.close();
+    //await browser.close();
 })();
 
 // (async () => {

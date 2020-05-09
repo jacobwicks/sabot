@@ -4,6 +4,7 @@
   "description": "a bot for posting on forums.somethingawful.com",
   "main": "saBot.ts",
   "dependencies": {
+    "@types/node-fetch": "^2.5.7",
     "@types/puppeteer": "^2.0.1",
     "cheerio": "^1.0.0-rc.3",
     "node-fetch": "^2.6.0",

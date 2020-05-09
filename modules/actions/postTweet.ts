@@ -9,7 +9,7 @@ interface postTweetProps {
 const postTweet = ({ page, twitterAccount }: postTweetProps) =>
     console.log(`placeholder for posting tweet`);
 
-export const postTrumpTweet = (page: Page) => {
+export const postTrumpTweet = async (page: Page) => {
     const twitterAccount = 'realDonaldTrump';
     postTweet({ page, twitterAccount });
 };

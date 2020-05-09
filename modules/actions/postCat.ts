@@ -1,32 +1,46 @@
+import fetch from 'node-fetch';
 import { Page } from 'puppeteer';
+import typePost from './typePost';
+import log from '../log';
+import { apiKeys } from '../../config.json';
 
-const ajax_get = (url: string, callback: (args: any) => void) => {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = () => {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            console.log('responseText:' + xmlhttp.responseText);
-            try {
-                var data = JSON.parse(xmlhttp.responseText);
-            } catch (err) {
-                console.log(err.message + ' in ' + xmlhttp.responseText);
-                return;
-            }
-            callback(data);
-        }
-    };
-
-    xmlhttp.open('GET', url, true);
-    xmlhttp.send();
+const options = {
+    headers: {
+        'X-API-KEY': apiKeys.catAPI,
+    },
 };
 
-export const postCat = ({ page, postId }: { page: Page; postId: number }) =>
-    ajax_get('https://api.thecatapi.com/v1/images/search?size=full', (data) => {
-        console.log(data);
-        // document.getElementById('id').innerHTML = data[0]['id'];
-        // document.getElementById('url').innerHTML = data[0]['url'];
+const getCat = async (): Promise<string> =>
+    (
+        await (
+            await fetch('https://api.thecatapi.com/v1/images/search', options)
+        ).json()
+    )[0]?.url;
 
-        // var html = '<img src="' + data[0]['url'] + '">';
-        // document.getElementById('image').innerHTML = html;
-    });
+interface postCatProps {
+    page: Page;
+    postId: number;
+    threadId: number;
+}
+
+const postCat = async ({ page, postId, threadId }: postCatProps) => {
+    log(`posting a kitty cat, quoting id ${postId}`);
+
+    const catImgSrc = await getCat();
+
+    const postContent = `[img]${catImgSrc}[/img]`;
+
+    try {
+        await typePost({
+            postContent,
+            page,
+            postId,
+            threadId,
+        });
+    } catch (err) {
+        //if something goes wrong, then log it!
+        log('postCat failed', { page, postId, threadId }, err);
+    }
+};
 
 export default postCat;

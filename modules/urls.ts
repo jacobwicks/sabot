@@ -16,7 +16,7 @@ export const trumpThreadId = 3921885;
 export const trumpThreadLastRead = `https://forums.somethingawful.com/showthread.php?threadid=${trumpThreadId}&goto=newpost`;
 
 //starts a new reply to a given thread
-export const replyToThread = (threadId: string) =>
+export const replyToThread = (threadId: number) =>
     `https://forums.somethingawful.com/newreply.php?action=newreply&threadid=${threadId}`;
 
 //reply to a specific post in a given thread
@@ -24,8 +24,8 @@ export const replyToPost = ({
     postId,
     threadId,
 }: {
-    postId: string;
-    threadId: string;
+    postId: number;
+    threadId: number;
 }) => `${replyToThread(threadId)}&postid=${postId}`;
 
 export const showThread = (threadId: number) =>

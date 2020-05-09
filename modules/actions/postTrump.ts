@@ -4,8 +4,8 @@ import log from '../log';
 
 interface postTrumpProps {
     page: Page;
-    postId: string;
-    threadId: string;
+    postId: number;
+    threadId: number;
 }
 
 const postTrump = async ({ page, postId, threadId }: postTrumpProps) => {

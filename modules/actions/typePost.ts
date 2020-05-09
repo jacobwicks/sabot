@@ -4,8 +4,8 @@ import { replyToPost, replyToThread } from '../urls';
 interface typePostProps {
     postContent: string;
     page: Page;
-    postId: string;
-    threadId: string;
+    postId: number;
+    threadId: number;
 }
 
 //types a post and hits the submit reply button
