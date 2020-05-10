@@ -21,3 +21,10 @@ export interface Post {
     //the img.src property
     image?: string;
 }
+
+//a thread that the bot monitors
+export interface Thread {
+    name: string;
+    threadId: number;
+    limit?: LimitProps;
+}

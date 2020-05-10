@@ -8,15 +8,6 @@ export const loggedInAddress = 'https://forums.somethingawful.com/';
 export const loggedOutAddress =
     'https://forums.somethingawful.com/account.php?action=logout';
 
-//the trump threadId changes every month when the thread gets closed and a new one starts
-//probably move this to the config file
-export const trumpThreadId = 3921885;
-
-export const covidThreadId = 3921857;
-
-//this links to the last read post in the trump thread
-export const trumpThreadLastRead = `https://forums.somethingawful.com/showthread.php?threadid=${trumpThreadId}&goto=newpost`;
-
 //starts a new reply to a given thread
 export const replyToThread = (threadId: number) =>
     `https://forums.somethingawful.com/newreply.php?action=newreply&threadid=${threadId}`;
@@ -44,5 +35,3 @@ export const showThreadPageNumber = ({
 //this links to the last read post in the thread
 export const threadLastRead = (threadId: number) =>
     `https://forums.somethingawful.com/showthread.php?threadid=${threadId}&goto=newpost`;
-
-export const replyToTrumpThread = `https://forums.somethingawful.com/newreply.php?action=newreply&threadid=${trumpThreadId}`;

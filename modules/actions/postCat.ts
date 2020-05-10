@@ -10,9 +10,12 @@ const options = {
     },
 };
 
+//gets a cat from the cat api
 const getCat = async (): Promise<string> =>
+    //json method of the response is async, must be awaited
     (
-        await (
+        await //image request with the API key in options
+        (
             await fetch('https://api.thecatapi.com/v1/images/search', options)
         ).json()
     )[0]?.url;

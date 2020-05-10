@@ -41,6 +41,9 @@ const typePost = async ({
 
         //click submit reply to post!
         submitReply.click();
+
+        //wait for post to be accepted
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
     } else {
         throw new Error('typePost Unable to find post');
     }
