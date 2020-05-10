@@ -31,7 +31,7 @@ const imageWider = async ({
 };
 
 //takes an array of posts, handles them
-const handlePosts = ({
+const handlePosts = async ({
     page,
     posts,
     threadId,
@@ -39,18 +39,17 @@ const handlePosts = ({
     page: Page;
     posts: Post[];
     threadId: number;
-}) => {
+}) =>
     posts.forEach(async (post, index) => {
         //get the properties of the post
         const { author, body, id: postId, image } = post;
 
-        if (author.toLowerCase() === 'sous videodrome') {
-            console.log(
-                `${index}: id ${postId}, written by ${author}`,
-                image,
-                body
-            );
-        }
+        console.log(
+            `${index}: id ${postId}, written by ${author}`,
+            image,
+            body
+        );
+
         //if a user posts valid instructions as the body of their post
         //then the corresponding action will be taken
         const handleBody: { [key: string]: () => Promise<void> } = {
@@ -92,6 +91,5 @@ const handlePosts = ({
             handleBody['default']
         )();
     });
-};
 
 export default handlePosts;

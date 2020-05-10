@@ -12,6 +12,8 @@ export const loggedOutAddress =
 //probably move this to the config file
 export const trumpThreadId = 3921885;
 
+export const covidThreadId = 3921857;
+
 //this links to the last read post in the trump thread
 export const trumpThreadLastRead = `https://forums.somethingawful.com/showthread.php?threadid=${trumpThreadId}&goto=newpost`;
 

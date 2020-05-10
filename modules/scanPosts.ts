@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer';
-import { Post } from '../types';
+import { Post, LimitProps } from '../types';
 import { threadLastRead, showThreadPageNumber } from './urls';
 import log from './log';
 
@@ -135,13 +135,6 @@ const getLastPageNumber = async (page: Page) => {
     //and on the last page, the last page element doesn't exist
     return lastPage || getPageNumber(await page.url());
 };
-
-interface LimitProps {
-    startPage: number;
-    startPost?: number;
-    stopPage?: number;
-    stopPost?: number;
-}
 
 //if no limits are provided,
 //use this dummy object as the destructuring target
