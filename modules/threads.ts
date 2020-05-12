@@ -17,6 +17,6 @@ const trumpThread = {
     limit: { startPage: 301 },
 };
 
-const threads: Thread[] = [covidThread, trumpThread];
+const threads: Thread[] = [covidThread];
 
 export default threads;

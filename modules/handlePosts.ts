@@ -64,10 +64,10 @@ const handlePosts = async ({
                     : Promise.resolve(),
 
             //posts the latest tweet by trump
-            "what's trumping": () => postTrumpTweet(page),
-            "what's trumpin": () => postTrumpTweet(page),
-            'whats trumping': () => postTrumpTweet(page),
-            'whats trumpin': () => postTrumpTweet(page),
+            "what's trumping": () => postTrumpTweet({ page, postId, threadId }),
+            "what's trumpin": () => postTrumpTweet({ page, postId, threadId }),
+            'whats trumping': () => postTrumpTweet({ page, postId, threadId }),
+            'whats trumpin': () => postTrumpTweet({ page, postId, threadId }),
 
             //widens the first image in the post
             wider: () =>

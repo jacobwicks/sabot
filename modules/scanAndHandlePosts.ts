@@ -14,6 +14,7 @@ const scanAndHandlePosts = async (page: Page) => {
     for await (const thread of Object.keys(newPosts)) {
         //cast the key to a number
         const threadId = Number(thread);
+        console.log(`handling posts for ${threadId}`);
 
         //handle each post in the array
         await handlePosts({
