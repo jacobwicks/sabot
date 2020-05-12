@@ -3,7 +3,7 @@ import getNewPostsFromThreads from './getNewPostsFromThreads';
 import threads from './threads';
 import handlePosts from './handlePosts';
 
-const scanAndHandlePosts = async (page: Page) => {
+const getPostsAndHandlePosts = async (page: Page) => {
     //an object { threadId : Post[] }
     const newPosts = await getNewPostsFromThreads({
         threads,
@@ -26,4 +26,4 @@ const scanAndHandlePosts = async (page: Page) => {
     }
 };
 
-export default scanAndHandlePosts;
+export default getPostsAndHandlePosts;

@@ -1,0 +1,11 @@
+// //get all the quotes, if any
+// const quotes = [...post.querySelectorAll('blockquote')];
+
+// //get the first image quoted
+// //when you get back to this, make it find first image in post if none in quotes
+// const getFirstImage = (quotes: HTMLQuoteElement[]) => {
+//     const quoteWithImage = quotes.find((quote) =>
+//         quote.querySelector('img')
+//     );
+//     return quoteWithImage?.querySelector('img')?.src;
+// };

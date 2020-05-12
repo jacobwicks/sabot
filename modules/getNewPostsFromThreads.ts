@@ -23,6 +23,9 @@ const getNewPostsFromThreads = async ({
             const { name, threadId, limit } = thread;
 
             console.log(`scanning ${name}, threadId ${threadId}`);
+            limit &&
+                console.log(`scan limited. starting at page: ${limit.startPage}, post ${limit.startPost},
+            stopping at page: ${limit.stopPage}, post ${limit.stopPost}`);
 
             //wait for posts from the current thread
             const currentPosts = await getNewPostsFromThread({
