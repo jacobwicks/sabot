@@ -1,3 +1,5 @@
+import { Page } from 'puppeteer';
+
 //limits on where to scan in a thread
 export interface LimitProps {
     startPage: number;
@@ -22,9 +24,28 @@ export interface Post {
     image?: string;
 }
 
+//an interface for a response that quotes a specific postId
+export interface respondToPostProps {
+    //puppeteer Page object
+    page: Page;
+
+    //the id of the post that will be quoted
+    postId: number;
+
+    //the thread where the post is
+    threadId: number;
+}
+
 //a thread that the bot monitors
 export interface Thread {
+    //human readable name
+    //goes in the logs
     name: string;
+
+    //the unique id of the thread on the forums
     threadId: number;
+
+    //optional limits on scanning the thread
+    //start at X page, post, stop at Y page, post
     limit?: LimitProps;
 }

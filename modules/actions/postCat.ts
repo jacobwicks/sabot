@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
-import { Page } from 'puppeteer';
 import typePost from './typePost';
 import log from '../log';
 import { apiKeys } from '../../config.json';
+import { respondToPostProps } from '../../types';
 
 const options = {
     headers: {
@@ -20,13 +20,7 @@ const getCat = async (): Promise<string> =>
         ).json()
     )[0]?.url;
 
-interface postCatProps {
-    page: Page;
-    postId: number;
-    threadId: number;
-}
-
-const postCat = async ({ page, postId, threadId }: postCatProps) => {
+const postCat = async ({ page, postId, threadId }: respondToPostProps) => {
     log(`posting a kitty cat, quoting id ${postId}`);
 
     const catImgSrc = await getCat();
