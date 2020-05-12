@@ -1,4 +1,4 @@
-import typePost from './typePost';
+import makePost from './typePost';
 import log from '../log';
 import * as smilies from '../smilies.json';
 import { respondToPostProps } from '../../types';
@@ -7,12 +7,12 @@ import { respondToPostProps } from '../../types';
 const getSmiley = () => smilies[Math.floor(Math.random() * smilies.length)];
 
 const postSmiley = async ({ page, postId, threadId }: respondToPostProps) => {
-    log(`posting a random smiley cat, quoting id ${postId}`);
+    log(`posting a random smiley, quoting id ${postId}`);
 
     const postContent = getSmiley();
 
     try {
-        await typePost({
+        await makePost({
             postContent,
             page,
             postId,

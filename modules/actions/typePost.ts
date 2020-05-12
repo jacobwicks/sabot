@@ -9,7 +9,7 @@ interface typePostProps {
 }
 
 //types a post and hits the submit reply button
-const typePost = async ({
+const makePost = async ({
     postContent,
     page,
     postId,
@@ -49,4 +49,4 @@ const typePost = async ({
     }
 };
 
-export default typePost;
+export default makePost;

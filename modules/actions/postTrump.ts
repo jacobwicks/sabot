@@ -1,20 +1,14 @@
-import { Page } from 'puppeteer';
-import typePost from './typePost';
+import makePost from './typePost';
 import log from '../log';
+import { respondToPostProps } from '../../types';
 
-interface postTrumpProps {
-    page: Page;
-    postId: number;
-    threadId: number;
-}
-
-const postTrump = async ({ page, postId, threadId }: postTrumpProps) => {
+const postTrump = async ({ page, postId, threadId }: respondToPostProps) => {
     log(`posting trum, quoting id ${postId}`);
 
     const postContent = `treeMOP!`;
 
     try {
-        await typePost({
+        await makePost({
             postContent,
             page,
             postId,
