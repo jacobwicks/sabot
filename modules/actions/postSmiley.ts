@@ -1,4 +1,4 @@
-import makePost from './typePost';
+import makePost from './makePost';
 import log from '../log';
 import * as smilies from '../smilies.json';
 import { respondToPostProps } from '../../types';

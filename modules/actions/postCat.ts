@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import makePost from './typePost';
+import makePost from './makePost';
 import log from '../log';
 import { apiKeys } from '../../config.json';
 import { respondToPostProps } from '../../types';

@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer';
-import makePost from './typePost';
+import makePost from './makePost';
 import getTweet from '../getTweet';
 
 interface postTweetProps {
