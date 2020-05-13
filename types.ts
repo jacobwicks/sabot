@@ -24,6 +24,11 @@ export interface Post {
     image?: string;
 }
 
+export interface PostManipulatedImageProps extends respondToPostProps {
+    //the url of the image to be widened
+    image: string;
+}
+
 //an interface for a response that quotes a specific postId
 export interface respondToPostProps {
     //puppeteer Page object

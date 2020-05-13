@@ -3,21 +3,10 @@ import { Post } from '../types';
 import postCat from './actions/postCat';
 import { postTrumpTweet } from './actions/postTweet';
 import postImageWider from './actions/postImageWider';
+import postImageRedder from './actions/postImageRedder';
 
 const postTrump = async ({ page, postId }: { page: Page; postId: number }) =>
     console.log('placeholder for misspelling turmp');
-
-const imageRedder = async ({
-    image,
-    page,
-    postId,
-}: {
-    image: string;
-    page: Page;
-    postId: number;
-}) => {
-    console.log('placeholder for reddening image');
-};
 
 //takes an array of posts, handles them
 const handlePosts = async ({
@@ -34,8 +23,6 @@ const handlePosts = async ({
         //get the properties of the post
         const { author, body, id: postId, image } = post;
 
-        console.log(`id ${postId}, written by ${author}`, image, body);
-
         //if a user posts valid instructions as the body of their post
         //then the corresponding action will be taken
         const handleBody: { [key: string]: () => Promise<void> } = {
@@ -49,7 +36,7 @@ const handlePosts = async ({
             //reddens the first image in the post
             redder: () =>
                 !!image
-                    ? imageRedder({ image, page, postId })
+                    ? postImageRedder({ image, page, postId, threadId })
                     : Promise.resolve(),
 
             //posts the latest tweet by trump
