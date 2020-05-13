@@ -1,36 +1,36 @@
 {
-  "name": "sabot",
-  "version": "1.0.0",
-  "description": "a bot for posting on forums.somethingawful.com",
-  "main": "saBot.ts",
-  "dependencies": {
-    "@types/node-fetch": "^2.5.7",
-    "@types/puppeteer": "^2.0.1",
-    "canvas": "^2.6.1",
-    "cheerio": "^1.0.0-rc.3",
-    "form-data": "^3.0.0",
-    "node-fetch": "^2.6.0",
-    "node-pre-gyp": "^0.14.0",
-    "oauth": "^0.9.15",
-    "puppeteer": "^3.0.1",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5",
-    "tslib": "^1.11.2",
-    "twitter": "^1.7.1",
-    "typescript": "^3.8.3"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jacobwicks/sabot.git"
-  },
-  "author": "Jacob Wicks",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jacobwicks/sabot/issues"
-  },
-  "homepage": "https://github.com/jacobwicks/sabot#readme"
+    "name": "sabot",
+    "version": "1.0.0",
+    "description": "a bot for posting on forums.somethingawful.com",
+    "main": "saBot.ts",
+    "dependencies": {
+        "@types/node-fetch": "^2.5.7",
+        "@types/puppeteer": "^2.0.1",
+        "canvas": "^2.6.1",
+        "cheerio": "^1.0.0-rc.3",
+        "form-data": "^3.0.0",
+        "node-fetch": "^2.6.0",
+        "node-pre-gyp": "^0.14.0",
+        "oauth": "^0.9.15",
+        "puppeteer": "^3.0.1",
+        "request": "^2.88.2",
+        "request-promise": "^4.2.5",
+        "tslib": "^1.11.2",
+        "twitter": "^1.7.1",
+        "typescript": "^3.8.3"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jacobwicks/sabot.git"
+    },
+    "author": "Jacob Wicks",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jacobwicks/sabot/issues"
+    },
+    "homepage": "https://github.com/jacobwicks/sabot#readme"
 }

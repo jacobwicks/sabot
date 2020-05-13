@@ -1,51 +1,73 @@
-const { createCanvas, loadImage } = require('canvas');
-const fs = require('fs');
+const puppeteer = require('puppeteer');
+const deathToll =
+    'https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html';
 
-const screamUrl = 'http://www.w3schools.com/tags/img_the_scream.jpg';
-const bushUrl = 'https://i.imgur.com/qSJvRFk.jpg';
-const wideTrump = 'https://i.imgur.com/jYOjavk.png';
+const setupBrowser = async () => {
+    //create the puppeteer browser
+    const browser = await puppeteer.launch();
 
-//returns number between 100 and 255
-const getRedderBy = () => Math.floor(Math.random() * (255 - 100 + 1) + 100);
+    //instantiate a page
+    const page = await browser.newPage();
 
-const redden = async () => {
-    const redFaction = getRedderBy();
+    //disable slow stuff
+    await page.setRequestInterception(true);
 
-    //load image from provided url
-    const image = await loadImage(wideTrump);
-
-    //create the canvas object. Width and Height of original image
-    const canvas = createCanvas(image.width, image.height);
-
-    //2d context to manupulate image
-    const context = canvas.getContext('2d');
-
-    context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-    const originalPixels = context.getImageData(
-        0,
-        0,
-        image.width,
-        image.height
-    );
-    const currentPixels = context.getImageData(0, 0, image.width, image.height);
-
-    image.onload = null;
-
-    if (!originalPixels) return; // Check if image has loaded
-
-    for (var I = 0, L = originalPixels.data.length; I < L; I += 4) {
-        // If it's not a transparent pixel
-        if (currentPixels.data[I + 3] > 0) {
-            //divide original red channel value by 255
-            //then multiply by 255 + redFaction variable, which is 100-255
-            currentPixels.data[I] =
-                (originalPixels.data[I] / 255) * (255 + redFaction);
+    //intercept the requests to disable it
+    page.on('request', (req) => {
+        if (
+            //css
+            req.resourceType() == 'stylesheet' ||
+            req.resourceType() == 'font' ||
+            //image loading
+            req.resourceType() == 'image' ||
+            //javascript
+            req.resourceType() === 'script'
+        ) {
+            req.abort();
+        } else {
+            req.continue();
         }
-    }
-    context.putImageData(currentPixels, 0, 0);
-    const redImageBuffer = canvas.toBuffer();
-    fs.writeFileSync('red1.jpg', redImageBuffer);
+    });
+
+    //need the browser object to close it out when done
+    return {
+        browser,
+        page,
+    };
 };
 
-redden();
+const getDeathToll = async () => {
+    const { browser, page } = await setupBrowser();
+    await page.goto(deathToll, {
+        waitUntil: 'networkidle0',
+    });
+
+    const { cases, deaths } = await page.evaluate(() => {
+        const callouts = [...document.getElementsByClassName('callout')];
+        const deathArray = callouts[1].innerText.split(' ');
+        const deaths = {
+            new: deathArray[3],
+            total: deathArray[2],
+        };
+
+        const casesArray = callouts[0].innerText.split(' ');
+        const cases = {
+            new: casesArray[3],
+            total: casesArray[2],
+        };
+
+        return {
+            cases,
+            deaths,
+        };
+    });
+
+    const postContent = `There have been ${deaths.total} total deaths, including ${deaths.new} newly reported.
+    There are ${cases.total} COVID 19 cases, including ${cases.new} newly reported.`;
+
+    console.log(postContent);
+
+    await browser.close();
+};
+
+getDeathToll();

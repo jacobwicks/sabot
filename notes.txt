@@ -1,0 +1,20 @@
+Image archive function
+goal: user posts 'bot, gimme a collectionName"
+bot responds by posting a random image from the collectionName
+
+goal: user posts 'bot, add to collectionName"
+bot responds by posting 'image is under review for addition to collectionName'
+bot adds url to array of submissions
+there's a webpage where bot runner can log on and review submissions
+shows image, url, and submitters userName, userId
+
+Accept: upload image to imgur album for collectionName. remove from array of submissions
+reject: remove from array of submissions
+
+Needed:
+an imgur album containing a collection of images
+get request for album contents
+way to display webpage for review
+way to login to webpage for review
+
+

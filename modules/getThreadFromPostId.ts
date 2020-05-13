@@ -2,7 +2,17 @@ import threads from './threads';
 import { Page } from 'puppeteer';
 
 //const postId = 504748217;
-const showPost = `https://forums.somethingawful.com/showthread.php?action=showpost&postid=${postId}`;
+//const showPost = `https://forums.somethingawful.com/showthread.php?action=showpost&postid=${postId}`;
+
+export const getThreadIdFromUrl = (url: string) => {
+    const threadIdParam =
+        'https://forums.somethingawful.com/showthread.php?threadid';
+
+    const params = new URLSearchParams(url);
+
+    const threadId = Number(params.get(threadIdParam));
+    return threadId;
+};
 
 const getThreadFromPostId = async ({
     page,
@@ -24,13 +34,13 @@ const getThreadFromPostId = async ({
     // and pull the threadId out of it.. use params or whatever
 
     const url = `https://forums.somethingawful.com/showthread.php?threadid=3913318&userid=179334`;
-    const threadIdParam =
-        'https://forums.somethingawful.com/showthread.php?threadid';
+    // const threadIdParam =
+    //     'https://forums.somethingawful.com/showthread.php?threadid';
 
-    const params = new URLSearchParams(url);
+    // const params = new URLSearchParams(url);
 
-    const threadId = Number(params.get(threadIdParam));
-    return threadId;
+    // const threadId = Number(params.get(threadIdParam));
+    return getThreadIdFromUrl(url);
 };
 
 const postIsInBotThread = async ({

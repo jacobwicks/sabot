@@ -29,9 +29,21 @@ const makePost = async ({
     const post = await page.$('textarea');
 
     if (post) {
+        //used to use .type, but dunno how to append text instead of put it the beginning
         //elementHandles have available methods, including .type()
         //.type() allows you to type text into the element that the elementHandle refers to
-        await post.type(postContent);
+        //await post.type(postContent);
+
+        //pass postContent string into page.evaluate
+        await page.evaluate((postContent: string) => {
+            //get the textarea where you type the post
+            const postField = <HTMLTextAreaElement>(
+                document.getElementsByName('message')[0]
+            );
+
+            //append postContent to the textarea postField
+            postField.value += postContent;
+        }, postContent);
 
         //querySelectorAll for input type = submit gets us the buttons
         const submits = await page.$$('input[type="submit"]');

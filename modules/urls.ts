@@ -1,3 +1,9 @@
+export const controlPanel = 'https://forums.somethingawful.com/usercp.php';
+
+//the cdc us cases numbers
+export const deathToll =
+    'https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html';
+
 //the login page for the SA forums
 export const loginPage =
     'https://forums.somethingawful.com/account.php?action=loginform';

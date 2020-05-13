@@ -44,8 +44,13 @@ export interface respondToPostProps {
 //a thread that the bot monitors
 export interface Thread {
     //human readable name
+    //designated by you, the person running the bot
     //goes in the logs
-    name: string;
+    name?: string;
+
+    //title from the forums
+    //this is often changed
+    title?: string;
 
     //the unique id of the thread on the forums
     threadId: number;

@@ -1,9 +1,18 @@
 import { Page } from 'puppeteer';
 import getNewPostsFromThreads from './getNewPostsFromThreads';
-import threads from './threads';
+import listedThreads from './threads';
 import handlePosts from './handlePosts';
+import { Thread } from '../types';
 
-const getPostsAndHandlePosts = async (page: Page) => {
+const getPostsAndHandlePosts = async ({
+    page,
+    threads,
+}: {
+    page: Page;
+    threads?: Thread[];
+}) => {
+    threads = threads ? threads : listedThreads;
+
     //an object { threadId : Post[] }
     const newPosts = await getNewPostsFromThreads({
         threads,
@@ -14,7 +23,6 @@ const getPostsAndHandlePosts = async (page: Page) => {
     for await (const thread of Object.keys(newPosts)) {
         //cast the key to a number
         const threadId = Number(thread);
-        console.log(`handling posts for ${threadId}`);
 
         //handle each post in the array
         await handlePosts({

@@ -20,7 +20,7 @@ const getNewPostsFromThreads = async ({
             //get thread name, id, limit
             //limit is an optional object that designates
             //where to start and stop scanning the thread
-            const { name, threadId, limit } = thread;
+            const { limit, name, title, threadId } = thread;
 
             console.log(`scanning ${name}, threadId ${threadId}`);
             limit &&
@@ -35,7 +35,9 @@ const getNewPostsFromThreads = async ({
             });
 
             console.log(
-                `there are ${currentPosts.length} new posts in the ${name} thread`
+                `there are ${currentPosts.length} new posts in the ${
+                    name ? name : title
+                } thread`
             );
 
             allPosts[threadId] = currentPosts;
