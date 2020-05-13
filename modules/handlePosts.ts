@@ -2,6 +2,7 @@ import { Page } from 'puppeteer';
 import { Post } from '../types';
 import postCat from './actions/postCat';
 import { postTrumpTweet } from './actions/postTweet';
+import postImageWider from './actions/postImageWider';
 
 const postTrump = async ({ page, postId }: { page: Page; postId: number }) =>
     console.log('placeholder for misspelling turmp');
@@ -16,18 +17,6 @@ const imageRedder = async ({
     postId: number;
 }) => {
     console.log('placeholder for reddening image');
-};
-
-const imageWider = async ({
-    image,
-    page,
-    postId,
-}: {
-    image: string;
-    page: Page;
-    postId: number;
-}) => {
-    console.log('placeholder for widening image');
 };
 
 //takes an array of posts, handles them
@@ -72,7 +61,7 @@ const handlePosts = async ({
             //widens the first image in the post
             wider: () =>
                 !!image
-                    ? imageWider({ image, page, postId })
+                    ? postImageWider({ image, page, postId, threadId })
                     : Promise.resolve(),
 
             //no instruction received
