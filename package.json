@@ -6,8 +6,10 @@
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
     "@types/puppeteer": "^2.0.1",
+    "canvas": "^2.6.1",
     "cheerio": "^1.0.0-rc.3",
     "node-fetch": "^2.6.0",
+    "node-pre-gyp": "^0.14.0",
     "oauth": "^0.9.15",
     "puppeteer": "^3.0.1",
     "request": "^2.88.2",
