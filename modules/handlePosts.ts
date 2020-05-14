@@ -7,6 +7,7 @@ import postDeathToll from './actions/postDeathToll';
 import postImageWider from './actions/postImageWider';
 import postImageRedder from './actions/postImageRedder';
 import postFromImageCollection from './actions/postFromImageCollection';
+import noneAThisMatters from './actions/noneAThisMatters';
 
 const isInstruction = (body: string) =>
     body.slice(0, botName.length).toLowerCase() === botName;
@@ -82,8 +83,14 @@ const handlePosts = async ({
         const gimme = 'gimme';
         const add = 'add';
 
-        //get image from collection starts with gimme
-        if (instruction.slice(0, gimme.length) === gimme) {
+        if (instruction.includes('matter')) {
+            await noneAThisMatters({
+                page,
+                postId,
+                threadId,
+            });
+        } else if (instruction.slice(0, gimme.length) === gimme) {
+            //get image from collection starts with gimme
             instruction = instruction.slice(gimme.length).trim();
 
             //may say 'gimme a' or just 'gimme'

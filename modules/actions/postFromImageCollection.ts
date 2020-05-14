@@ -2,6 +2,8 @@ import makePost from './makePost';
 import log from '../log';
 import { RespondToPostProps } from '../../types';
 import getRandomImageFromCollection from '../getRandomImageFromCollection';
+import addTyposToString, { defaultSettings } from '../typos/addTyposToString';
+
 const {
     imageCollections,
 }: { imageCollections: KeyValueObject } = require('../../config.json');
@@ -17,6 +19,22 @@ interface PostFromImageCollection extends RespondToPostProps {
     imageCollection: string;
 }
 
+const getTrump = () => {
+    const inputString = 'Trump!';
+
+    const settings = {
+        ...defaultSettings,
+        extraCharacters: 40,
+        frequency: 35,
+        missedCharacters: 25,
+    };
+
+    return addTyposToString({
+        inputString,
+        settings,
+    });
+};
+
 const postFromImageCollection = async ({
     imageCollection,
     page,
@@ -29,7 +47,7 @@ const postFromImageCollection = async ({
         );
 
         const getPostContent: KeyValueObject = {
-            trump: `[img]${image}[/img]\nTRAEMOO!`,
+            trump: `[img]${image}[/img]\n${getTrump()}`,
             default: `[img]${image}[/img]`,
         };
 
