@@ -29,7 +29,7 @@ const postImageWider = async ({
         });
     } catch (err) {
         //if something goes wrong, then log it!
-        log('postCat failed', { page, postId, threadId }, err);
+        log('postImageWider failed', { page, postId, threadId }, err);
     }
 };
 

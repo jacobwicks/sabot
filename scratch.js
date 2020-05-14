@@ -1,73 +1,67 @@
-const puppeteer = require('puppeteer');
-const deathToll =
-    'https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html';
+const { imageCollections } = require('./config.json');
 
-const setupBrowser = async () => {
-    //create the puppeteer browser
-    const browser = await puppeteer.launch();
+const add = 'add';
+const gimme = 'gimme';
+const instruction = 'gimme a trump';
 
-    //instantiate a page
-    const page = await browser.newPage();
+const instructions = [
+    'gimme a trump',
+    'add to snoo',
+    'add to schnorkles',
+    'gimme a schnorkles',
+    'gimme a snoo',
+    'add to snoo',
+    'add snoo',
+    'add schnorkles',
+    'gimme trump',
+    'gimme doodoo',
+    'add to peeeee',
+];
 
-    //disable slow stuff
-    await page.setRequestInterception(true);
+/*
+gimme ${imageCollection}
+gimme a ${imageCollection}
 
-    //intercept the requests to disable it
-    page.on('request', (req) => {
-        if (
-            //css
-            req.resourceType() == 'stylesheet' ||
-            req.resourceType() == 'font' ||
-            //image loading
-            req.resourceType() == 'image' ||
-            //javascript
-            req.resourceType() === 'script'
-        ) {
-            req.abort();
-        } else {
-            req.continue();
-        }
-    });
+add to ${imageCollection}
+add ${imageCollection}
 
-    //need the browser object to close it out when done
-    return {
-        browser,
-        page,
-    };
+1. recognize gimme as a request for image from imageCollection
+
+*/
+
+const addToImageCollection = (instruction) =>
+    Object.keys(imageCollections).includes(instruction)
+        ? console.log(`valid instruction`)
+        : console.log(`invalid`, instruction);
+
+const getFromImageCollection = (instruction) => {
+    Object.keys(imageCollections).includes(instruction)
+        ? console.log(`valid instruction`)
+        : console.log(`invalid`, instruction);
 };
 
-const getDeathToll = async () => {
-    const { browser, page } = await setupBrowser();
-    await page.goto(deathToll, {
-        waitUntil: 'networkidle0',
-    });
+const processInstruction = (instruction) => {
+    if (instruction.slice(0, gimme.length) === gimme) {
+        instruction = instruction.slice(gimme.length).trim();
 
-    const { cases, deaths } = await page.evaluate(() => {
-        const callouts = [...document.getElementsByClassName('callout')];
-        const deathArray = callouts[1].innerText.split(' ');
-        const deaths = {
-            new: deathArray[3],
-            total: deathArray[2],
-        };
+        instruction.trim().slice(0, 1) === 'a' &&
+            (instruction = instruction.trim().slice(1));
 
-        const casesArray = callouts[0].innerText.split(' ');
-        const cases = {
-            new: casesArray[3],
-            total: casesArray[2],
-        };
+        instruction = instruction.trim();
 
-        return {
-            cases,
-            deaths,
-        };
-    });
+        getFromImageCollection(instruction);
+    } else if (instruction.slice(0, add.length) === add) {
+        instruction = instruction.slice(add.length).trim();
 
-    const postContent = `There have been ${deaths.total} total deaths, including ${deaths.new} newly reported.
-    There are ${cases.total} COVID 19 cases, including ${cases.new} newly reported.`;
+        instruction.trim().slice(0, 2) === 'to' &&
+            (instruction = instruction.trim().slice(2));
 
-    console.log(postContent);
+        instruction = instruction.trim();
 
-    await browser.close();
+        addToImageCollection(instruction);
+    } else {
+        //console.log(`standard`);
+    }
 };
 
-getDeathToll();
+instructions.forEach((instruction) => processInstruction(instruction));

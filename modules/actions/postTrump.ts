@@ -1,8 +1,8 @@
 import makePost from './makePost';
 import log from '../log';
-import { respondToPostProps } from '../../types';
+import { RespondToPostProps } from '../../types';
 
-const postTrump = async ({ page, postId, threadId }: respondToPostProps) => {
+const postTrump = async ({ page, postId, threadId }: RespondToPostProps) => {
     log(`posting trum, quoting id ${postId}`);
 
     const postContent = `treeMOP!`;

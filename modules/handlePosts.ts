@@ -1,14 +1,12 @@
 import { Page } from 'puppeteer';
 import { Post } from '../types';
-import { botName } from '../config.json';
+import { botName, imageCollections } from '../config.json';
 import postCat from './actions/postCat';
 import { postTrumpTweet } from './actions/postTweet';
+import postDeathToll from './actions/postDeathToll';
 import postImageWider from './actions/postImageWider';
 import postImageRedder from './actions/postImageRedder';
-import postDeathToll from './actions/postDeathToll';
-
-const postTrump = async ({ page, postId }: { page: Page; postId: number }) =>
-    console.log('placeholder for misspelling turmp');
+import postFromImageCollection from './actions/postFromImageCollection';
 
 const isInstruction = (body: string) =>
     body.slice(0, botName.length).toLowerCase() === botName;
@@ -48,7 +46,7 @@ const handlePosts = async ({
     //use a for loop, await in forEach doesn't work as expected
     for await (const post of instructions) {
         //get the properties of the post
-        const { author, body, id: postId, image, instruction } = post;
+        let { author, body, id: postId, image, instruction } = post;
 
         //if a user posts valid instructions as the body of their post
         //then the corresponding action will be taken
@@ -58,10 +56,6 @@ const handlePosts = async ({
             //posts a random picture of a cat
             //https://thecatapi.com/
             kittycat: () => postCat({ page, postId, threadId }),
-
-            //posts a misspelling of trump
-            //and a trump image from the archive
-            'gimme a trump': () => postTrump({ page, postId }),
 
             //reddens the first image in the post
             redder: () =>
@@ -85,14 +79,48 @@ const handlePosts = async ({
             default: () => Promise.resolve(),
         };
 
-        //invoke handleBody with the body of the post
-        await (
-            handleBody[instruction] ||
-            //maybe they added a period, or exclamation point
-            handleBody[instruction.slice(0, -1)] ||
-            //if neither of the first two is found, default
-            handleBody['default']
-        )();
+        const gimme = 'gimme';
+        const add = 'add';
+
+        //get image from collection starts with gimme
+        if (instruction.slice(0, gimme.length) === gimme) {
+            instruction = instruction.slice(gimme.length).trim();
+
+            //may say 'gimme a' or just 'gimme'
+            //slice of 'a'
+            instruction.trim().slice(0, 1) === 'a' &&
+                (instruction = instruction.trim().slice(1));
+
+            const imageCollection = instruction.trim();
+
+            await postFromImageCollection({
+                imageCollection,
+                page,
+                postId,
+                threadId,
+            });
+        } else if (instruction.slice(0, add.length) === add) {
+            //request to add image to imaegCollection starts with 'add'
+            instruction = instruction.slice(add.length).trim();
+
+            //may say 'add to' or just 'add'
+            //slice off 'to'
+            instruction.trim().slice(0, 2) === 'to' &&
+                (instruction = instruction.trim().slice(2));
+
+            const imageCollection = instruction.trim();
+
+            //addToImageCollection(instruction);
+        } else {
+            //invoke handleBody with the body of the post
+            await (
+                handleBody[instruction] ||
+                //maybe they added a period, or exclamation point
+                handleBody[instruction.slice(0, -1)] ||
+                //if neither of the first two is found, default
+                handleBody['default']
+            )();
+        }
 
         //if there are multiple instructions,
         //wait 10 seconds for the forums rate limiter

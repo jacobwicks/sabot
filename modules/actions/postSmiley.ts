@@ -1,12 +1,12 @@
 import makePost from './makePost';
 import log from '../log';
 import * as smilies from '../smilies.json';
-import { respondToPostProps } from '../../types';
+import { RespondToPostProps } from '../../types';
 
 //gets a smiley from the smilies
 const getSmiley = () => smilies[Math.floor(Math.random() * smilies.length)];
 
-const postSmiley = async ({ page, postId, threadId }: respondToPostProps) => {
+const postSmiley = async ({ page, postId, threadId }: RespondToPostProps) => {
     log(`posting a random smiley, quoting id ${postId}`);
 
     const postContent = getSmiley();

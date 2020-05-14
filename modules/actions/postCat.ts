@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import makePost from './makePost';
 import log from '../log';
 import { apiKeys } from '../../config.json';
-import { respondToPostProps } from '../../types';
+import { RespondToPostProps } from '../../types';
 
 const options = {
     headers: {
@@ -22,7 +22,7 @@ const getCat = async (): Promise<string> =>
     )[0]?.url;
 
 //posts a cat in response to a specific post
-const postCat = async ({ page, postId, threadId }: respondToPostProps) => {
+const postCat = async ({ page, postId, threadId }: RespondToPostProps) => {
     log(`posting a kitty cat, quoting id ${postId}`);
 
     const catImgSrc = await getCat();
