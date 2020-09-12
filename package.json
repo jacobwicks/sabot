@@ -9,7 +9,7 @@
         "canvas": "^2.6.1",
         "cheerio": "^1.0.0-rc.3",
         "form-data": "^3.0.0",
-        "node-fetch": "^2.6.0",
+        "node-fetch": "^2.6.1",
         "node-pre-gyp": "^0.14.0",
         "oauth": "^0.9.15",
         "puppeteer": "^3.0.1",
